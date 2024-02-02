@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/gaspartv/API-GO-fullcycle-imersao17/internal/entity"
 )
@@ -17,7 +18,7 @@ func NewCategoryDB(db *sql.DB) *CategoryDB {
 }
 
 func (cd *CategoryDB) GetCategories() ([]*entity.Category, error) {
-	rows, err := cd.db.Query("SELECT id, name FROM category")
+	rows, err := cd.db.Query("SELECT id, name FROM categories")
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +37,7 @@ func (cd *CategoryDB) GetCategories() ([]*entity.Category, error) {
 }
 
 func (cd *CategoryDB) GetCategory(id string) (*entity.Category, error) {
-	row := cd.db.QueryRow("SELECT id, name FROM category WHERE id = ?", id)
+	row := cd.db.QueryRow("SELECT id, name FROM categories WHERE id = ?", id)
 	var category entity.Category
 	err := row.Scan(&category.ID, &category.Name)
 	if err != nil {
@@ -46,8 +47,9 @@ func (cd *CategoryDB) GetCategory(id string) (*entity.Category, error) {
 }
 
 func (cd *CategoryDB) CreateCategory(category *entity.Category) (string, error) {
-	_, err := cd.db.Query("INSERT INTO category (id, name) VALUES ($1)", category.ID, category.Name)
+	_, err := cd.db.Query("INSERT INTO categories (id, name) VALUES (?, ?)", category.ID, category.Name)
 	if err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 	return category.ID, nil
