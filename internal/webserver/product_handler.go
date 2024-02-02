@@ -6,7 +6,7 @@ import (
 
 	"github.com/gaspartv/API-GO-fullcycle-imersao17/internal/entity"
 	"github.com/gaspartv/API-GO-fullcycle-imersao17/internal/service"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 type WebProductHandler struct {
@@ -48,7 +48,7 @@ func (wph *WebProductHandler) GetProduct(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func (wph *WebProductHandler) GetProductsByCategory(w http.ResponseWriter, r *http.Request) {
+func (wph *WebProductHandler) GetProductsByCategoryID(w http.ResponseWriter, r *http.Request) {
 	categoryID := chi.URLParam(r, "categoryID")
 	if categoryID == "" {
 		http.Error(w, "categoryID is required", http.StatusBadRequest)

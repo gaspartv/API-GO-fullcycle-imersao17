@@ -6,7 +6,7 @@ import (
 
 	"github.com/gaspartv/API-GO-fullcycle-imersao17/internal/entity"
 	"github.com/gaspartv/API-GO-fullcycle-imersao17/internal/service"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 )
 
 type WebCategoryHandler struct {
@@ -48,7 +48,7 @@ func (wch *WebCategoryHandler) GetCategory(w http.ResponseWriter, r *http.Reques
 	}
 }
 
-func (wch *WebCategoryHandler) CreateCategory(w http.ResponseWriter, r *http.Response) {
+func (wch *WebCategoryHandler) CreateCategory(w http.ResponseWriter, r *http.Request) {
 	var category entity.Category
 	err := json.NewDecoder(r.Body).Decode(&category)
 	if err != nil {
